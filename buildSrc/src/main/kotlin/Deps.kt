@@ -23,7 +23,7 @@ object Deps {
 
     object Napier {
         private const val version = "2.4.0"
-        const val napier = "io.github.aakira:napier:$version"
+        const val core = "io.github.aakira:napier:$version"
     }
 
     object Android {
@@ -32,11 +32,21 @@ object Deps {
         object Ui {
             const val material = "com.google.android.material:material:1.5.0"
             const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.3"
+
+            object Glide {
+                private const val version = "4.12.0"
+                const val core = "com.github.bumptech.glide:glide:$version"
+            }
         }
 
         object ViewBinding {
             private const val version = "1.5.3"
             const val delegate =  "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3"
+        }
+
+        object Adapter {
+            private const val version = "4.3.0"
+            const val delegate =  "com.hannesdorfmann:adapterdelegates4:$version"
         }
     }
 

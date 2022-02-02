@@ -8,19 +8,19 @@
     <fragment
         android:id="@+id/navigationCharacters"
         android:name="com.swallow.kmmrickandmorty.android.presentation.characters.fragments.CharactersFragment"
-        android:label="fragment_characters"
+        android:label="Characters"
         tools:layout="@layout/fragment_characters" />
 
     <fragment
         android:id="@+id/navigationLocations"
         android:name="com.swallow.kmmrickandmorty.android.presentation.locations.fragments.LocationsFragment"
-        android:label="fragment_locations"
+        android:label="Locations"
         tools:layout="@layout/fragment_locations" />
 
     <fragment
         android:id="@+id/navigationEpisodes"
         android:name="com.swallow.kmmrickandmorty.android.presentation.episodes.fragments.EpisodesFragment"
-        android:label="fragment_episodes"
+        android:label="Episodes"
         tools:layout="@layout/fragment_episodes" />
 
 </navigation>

@@ -31,7 +31,9 @@ withImplementation(
     Deps.Android.Ui.constraintLayout,
     Deps.AndroidX.Navigation.fragment,
     Deps.AndroidX.Navigation.ui,
-    Deps.Android.ViewBinding.delegate
+    Deps.Android.ViewBinding.delegate,
+    Deps.Android.Adapter.delegate,
+    Deps.Android.Ui.Glide.core
 )
 
 dependencies {
