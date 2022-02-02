@@ -19,12 +19,19 @@ android {
             isMinifyEnabled = false
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 withImplementation(
     Deps.AndroidX.appcompat,
     Deps.Android.Ui.material,
-    Deps.Android.Ui.constraintLayout
+    Deps.Android.Ui.constraintLayout,
+    Deps.AndroidX.Navigation.fragment,
+    Deps.AndroidX.Navigation.ui,
+    Deps.Android.ViewBinding.delegate
 )
 
 dependencies {

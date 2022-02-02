@@ -33,6 +33,11 @@ object Deps {
             const val material = "com.google.android.material:material:1.5.0"
             const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.3"
         }
+
+        object ViewBinding {
+            private const val version = "1.5.3"
+            const val delegate =  "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3"
+        }
     }
 
     object AndroidX {
