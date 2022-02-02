@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/navigation">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/navigationCharacters">
+
+    <fragment
+        android:id="@+id/navigationCharacters"
+        android:name="com.swallow.kmmrickandmorty.android.presentation.characters.fragments.CharactersFragment"
+        android:label="fragment_characters"
+        tools:layout="@layout/fragment_characters" />
+
+    <fragment
+        android:id="@+id/navigationLocations"
+        android:name="com.swallow.kmmrickandmorty.android.presentation.locations.fragments.LocationsFragment"
+        android:label="fragment_locations"
+        tools:layout="@layout/fragment_locations" />
+
+    <fragment
+        android:id="@+id/navigationEpisodes"
+        android:name="com.swallow.kmmrickandmorty.android.presentation.episodes.fragments.EpisodesFragment"
+        android:label="fragment_episodes"
+        tools:layout="@layout/fragment_episodes" />
 
 </navigation>
