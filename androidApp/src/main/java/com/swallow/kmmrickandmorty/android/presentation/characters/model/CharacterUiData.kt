@@ -15,18 +15,16 @@ sealed class CharacterUiData {
         val location: CharacterLocation,
         val episode: List<String>
     ) : CharacterUiData()
-
-    data class CharacterOrigin(
-        val name: String,
-        val url: String
-    ) : CharacterUiData()
-
-    data class CharacterLocation(
-        val name: String,
-        val url: String
-    ) : CharacterUiData()
 }
 
+data class CharacterOrigin(
+    val name: String,
+    val url: String
+)
 
+data class CharacterLocation(
+    val name: String,
+    val url: String
+)
 
 
