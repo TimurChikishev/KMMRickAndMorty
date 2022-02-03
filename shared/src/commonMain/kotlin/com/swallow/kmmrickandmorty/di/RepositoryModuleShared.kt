@@ -10,8 +10,7 @@ val repositoryModule = module {
 
     single<CharacterRepository>{
         CharacterRepositoryImpl(
-            httpClient = get(named(NetworkClient.CHARACTER)),
-            json = Json
+            httpClient = get(named(NetworkClient.CHARACTER))
         )
     }
 }

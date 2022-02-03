@@ -2,15 +2,18 @@ package com.swallow.kmmrickandmorty.android.presentation.characters.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.swallow.kmmrickandmorty.android.R
 import com.swallow.kmmrickandmorty.android.databinding.FragmentCharactersBinding
 import com.swallow.kmmrickandmorty.android.presentation.characters.adapters.ComplexDelegatesAdapter
+import com.swallow.kmmrickandmorty.android.presentation.characters.model.CharactersUiState
 import com.swallow.kmmrickandmorty.android.utils.autoCleared
 import com.swallow.kmmrickandmorty.android.utils.isOrientationPortrait
 import com.swallow.kmmrickandmorty.android.utils.launchOnStartedState
+import com.swallow.kmmrickandmorty.domain.common.LoadState
 import io.github.aakira.napier.Napier
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -42,13 +45,13 @@ class CharactersFragment : Fragment(R.layout.fragment_characters){
         characterViewModel.init()
 
         viewLifecycleOwner.launchOnStartedState {
-            characterViewModel.state.collect { state ->
-                state?.items?.forEach {
-                    Napier.d(message = "$it", tag = "CHECK_LOG")
-                }
-                complexAdapter.items = state?.items
-            }
+            characterViewModel.state.collect(::renderCharactes)
         }
+    }
+
+    private fun renderCharactes(state: CharactersUiState){
+        binding.progressBar.isVisible = state.loadState is LoadState.LoadingList
+        complexAdapter.items = state.items
     }
 
     companion object {

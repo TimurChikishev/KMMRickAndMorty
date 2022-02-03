@@ -19,10 +19,10 @@ class CharacterViewModel(
     private val store: CharactersStore
 ) : ViewModel() {
 
-    private val mutableState = MutableStateFlow<CharactersUiState?>(CharactersUiState())
-    val state: Flow<CharactersUiState?> = mutableState
+    private val mutableState = MutableStateFlow(CharactersUiState())
+    val state: Flow<CharactersUiState> = mutableState
 
-    private fun acceptState(state: CharactersUiState?) {
+    private fun acceptState(state: CharactersUiState) {
         mutableState.value = state
     }
 

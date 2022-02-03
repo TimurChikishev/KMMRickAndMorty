@@ -2,6 +2,7 @@ package com.swallow.kmmrickandmorty.domain.stores.characters
 
 import com.arkivanov.mvikotlin.core.store.Store
 import com.swallow.kmmrickandmorty.data.models.characters.RemoteCharacter
+import com.swallow.kmmrickandmorty.domain.common.LoadState
 import com.swallow.kmmrickandmorty.domain.stores.characters.CharactersStore.*
 
 interface CharactersStore : Store<Intent, State, Label> {
@@ -11,7 +12,8 @@ interface CharactersStore : Store<Intent, State, Label> {
     }
 
     data class State(
-        val items: List<RemoteCharacter> = emptyList()
+        val items: List<RemoteCharacter> = emptyList(),
+        val loadState: LoadState = LoadState.SuccessList
     )
 
     sealed class Label {

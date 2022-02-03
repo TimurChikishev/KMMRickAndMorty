@@ -12,7 +12,8 @@ import io.github.aakira.napier.Napier
 
 val charactersStateMapper: CharactersStore.State.() -> CharactersUiState? = {
     CharactersUiState(
-        items = items.map { it.mapToUi }
+        items = items.map { it.mapToUi },
+        loadState = loadState
     )
 }
 

@@ -1,6 +1,7 @@
 package com.swallow.kmmrickandmorty.domain.stores.characters
 
 import com.arkivanov.mvikotlin.extensions.coroutines.SuspendExecutor
+import com.swallow.kmmrickandmorty.domain.common.LoadState
 import com.swallow.kmmrickandmorty.domain.repository.CharacterRepository
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -27,7 +28,14 @@ class CharactersExecutorImpl(
     }
 
     private suspend fun initial() {
-        val wrapper = charactersRepository.getCharacters()
-        dispatch(CharacterResult.Loaded(wrapper.results))
+        dispatch(CharacterResult.UpdateLoadState(LoadState.LoadingList))
+
+        try {
+            val wrapper = charactersRepository.getCharacters()
+            dispatch(CharacterResult.Loaded(wrapper.results))
+            dispatch(CharacterResult.UpdateLoadState(LoadState.SuccessList))
+        } catch (t: Throwable) {
+            dispatch(CharacterResult.UpdateLoadState(LoadState.ErrorList))
+        }
     }
 }
