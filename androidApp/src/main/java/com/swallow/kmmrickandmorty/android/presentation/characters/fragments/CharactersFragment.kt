@@ -9,6 +9,7 @@ import com.swallow.kmmrickandmorty.android.R
 import com.swallow.kmmrickandmorty.android.databinding.FragmentCharactersBinding
 import com.swallow.kmmrickandmorty.android.presentation.characters.adapters.ComplexDelegatesAdapter
 import com.swallow.kmmrickandmorty.android.utils.autoCleared
+import com.swallow.kmmrickandmorty.android.utils.isOrientationPortrait
 import com.swallow.kmmrickandmorty.android.utils.launchOnStartedState
 import io.github.aakira.napier.Napier
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,6 +19,9 @@ class CharactersFragment : Fragment(R.layout.fragment_characters){
     private val binding by viewBinding(FragmentCharactersBinding::bind)
     private val characterViewModel by viewModel<CharacterViewModel>()
     private var complexAdapter by autoCleared<ComplexDelegatesAdapter>()
+
+    private val spanCount: Int
+        get() = if (isOrientationPortrait) PORTRAIT_SPAN_COUNT else LAND_SPAN_COUNT
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,7 +33,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters){
         complexAdapter = ComplexDelegatesAdapter()
         binding.recyclerView.apply {
             adapter = complexAdapter
-            layoutManager = GridLayoutManager(context, SPAN_COUNT)
+            layoutManager = GridLayoutManager(context, spanCount)
             setHasFixedSize(true)
         }
     }
@@ -48,6 +52,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters){
     }
 
     companion object {
-        private const val SPAN_COUNT = 2
+        private const val PORTRAIT_SPAN_COUNT = 2
+        private const val LAND_SPAN_COUNT = 3
     }
 }
