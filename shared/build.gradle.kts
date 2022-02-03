@@ -17,14 +17,34 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(Deps.Kotlin.Coroutines.native)
+                implementation(Deps.MVI.main)
+                implementation(Deps.MVI.core)
+                implementation(Deps.MVI.coroutines)
+                implementation(Deps.MVI.keepers)
+                implementation(Deps.MVI.logging)
+                implementation(Deps.Koin.core)
+                implementation(Deps.Koin.ktor)
+                implementation(Deps.Ktor.core)
+                implementation(Deps.Logging.napier)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(Deps.MVI.main)
+                implementation(Deps.MVI.core)
+                implementation(Deps.MVI.coroutines)
+                implementation(Deps.MVI.keepers)
+            }
+        }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
@@ -53,10 +73,17 @@ kotlin {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Versions.Android.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 21
-        targetSdk = 31
+        minSdk = Versions.Android.minSdk
+        targetSdk = Versions.Android.targetSdk
+    }
+
+    dependencies {
+        implementation(Deps.MVI.main)
+        implementation(Deps.MVI.core)
+        implementation(Deps.MVI.coroutines)
+        implementation(Deps.MVI.keepers)
     }
 }

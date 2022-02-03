@@ -1,6 +1,6 @@
 object Deps {
     object Kotlin {
-        const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
+        const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
 
         object Coroutines {
             private const val version = "1.6.0"
@@ -19,11 +19,20 @@ object Deps {
         private const val version = "3.1.5"
         const val core = "io.insert-koin:koin-core:$version"
         const val ktor = "io.insert-koin:koin-ktor:$version"
+        const val android = "io.insert-koin:koin-android:$version"
     }
 
-    object Napier {
-        private const val version = "2.4.0"
-        const val core = "io.github.aakira:napier:$version"
+    object Logging {
+        const val napier = "io.github.aakira:napier:2.4.0"
+    }
+
+    object MVI {
+        private const val version = "2.0.4"
+        const val core = "com.arkivanov.mvikotlin:mvikotlin:$version"
+        const val main = "com.arkivanov.mvikotlin:mvikotlin-main:$version"
+        const val coroutines = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:$version"
+        const val keepers = "com.arkivanov.mvikotlin:keepers:$version"
+        const val logging = "com.arkivanov.mvikotlin:mvikotlin-logging:$version"
     }
 
     object Android {

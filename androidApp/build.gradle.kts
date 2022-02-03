@@ -23,6 +23,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    }
 }
 
 withImplementation(
@@ -33,7 +37,14 @@ withImplementation(
     Deps.AndroidX.Navigation.ui,
     Deps.Android.ViewBinding.delegate,
     Deps.Android.Adapter.delegate,
-    Deps.Android.Ui.Glide.core
+    Deps.Android.Ui.Glide.core,
+    Deps.MVI.coroutines,
+    Deps.MVI.core,
+    Deps.MVI.main,
+    Deps.MVI.keepers,
+    Deps.Koin.core,
+    Deps.Koin.android,
+    Deps.Logging.napier
 )
 
 dependencies {
