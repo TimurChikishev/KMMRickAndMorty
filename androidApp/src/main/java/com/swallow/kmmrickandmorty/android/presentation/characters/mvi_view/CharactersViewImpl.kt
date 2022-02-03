@@ -6,7 +6,7 @@ import com.arkivanov.mvikotlin.core.utils.diff
 import com.arkivanov.mvikotlin.core.view.BaseMviView
 import com.arkivanov.mvikotlin.core.view.ViewRenderer
 import com.swallow.kmmrickandmorty.android.R
-import com.swallow.kmmrickandmorty.android.presentation.common.adapters.ComplexDelegatesAdapter
+import com.swallow.kmmrickandmorty.android.presentation.characters.adapters.ComplexDelegatesAdapter
 import com.swallow.kmmrickandmorty.domain.mvi_view.characters.CharactersView
 
 class CharactersViewImpl(

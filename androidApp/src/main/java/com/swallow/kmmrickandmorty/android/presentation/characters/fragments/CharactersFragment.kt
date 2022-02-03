@@ -3,24 +3,51 @@ package com.swallow.kmmrickandmorty.android.presentation.characters.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.arkivanov.mvikotlin.core.lifecycle.asMviLifecycle
-import com.arkivanov.mvikotlin.keepers.instancekeeper.ExperimentalInstanceKeeperApi
-import com.arkivanov.mvikotlin.keepers.instancekeeper.getInstanceKeeper
+import androidx.recyclerview.widget.GridLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.swallow.kmmrickandmorty.android.R
-import com.swallow.kmmrickandmorty.android.presentation.characters.mvi_view.CharactersViewImpl
-import com.swallow.kmmrickandmorty.domain.controller.characters.CharactersCoroutinesController
-import org.koin.android.ext.android.inject
-import org.koin.core.parameter.parametersOf
+import com.swallow.kmmrickandmorty.android.databinding.FragmentCharactersBinding
+import com.swallow.kmmrickandmorty.android.presentation.characters.adapters.ComplexDelegatesAdapter
+import com.swallow.kmmrickandmorty.android.utils.autoCleared
+import com.swallow.kmmrickandmorty.android.utils.launchOnStartedState
+import io.github.aakira.napier.Napier
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharactersFragment : Fragment(R.layout.fragment_characters){
 
-    @OptIn(ExperimentalInstanceKeeperApi::class)
-    private val controller by inject<CharactersCoroutinesController> {
-        parametersOf(getInstanceKeeper())
-    }
+    private val binding by viewBinding(FragmentCharactersBinding::bind)
+    private val characterViewModel by viewModel<CharacterViewModel>()
+    private var complexAdapter by autoCleared<ComplexDelegatesAdapter>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        controller.onViewCreated(CharactersViewImpl(view), lifecycle.asMviLifecycle())
+        setupAdapter()
+        initViewModel()
+    }
+
+    private fun setupAdapter() {
+        complexAdapter = ComplexDelegatesAdapter()
+        binding.recyclerView.apply {
+            adapter = complexAdapter
+            layoutManager = GridLayoutManager(context, SPAN_COUNT)
+            setHasFixedSize(true)
+        }
+    }
+
+    private fun initViewModel() {
+        characterViewModel.init()
+
+        viewLifecycleOwner.launchOnStartedState {
+            characterViewModel.state.collect { state ->
+                state?.items?.forEach {
+                    Napier.d(message = "$it", tag = "CHECK_LOG")
+                }
+                complexAdapter.items = state?.items
+            }
+        }
+    }
+
+    companion object {
+        private const val SPAN_COUNT = 2
     }
 }

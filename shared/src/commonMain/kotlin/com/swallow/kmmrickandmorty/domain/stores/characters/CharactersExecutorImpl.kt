@@ -2,7 +2,6 @@ package com.swallow.kmmrickandmorty.domain.stores.characters
 
 import com.arkivanov.mvikotlin.extensions.coroutines.SuspendExecutor
 import com.swallow.kmmrickandmorty.domain.repository.CharacterRepository
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 
 class CharactersExecutorImpl(
@@ -27,8 +26,8 @@ class CharactersExecutorImpl(
         }
     }
 
-
-    private fun initial() {
-        Napier.d(message = "INIT", tag = "CHECK_LOG")
+    private suspend fun initial() {
+        val wrapper = charactersRepository.getCharacters()
+        dispatch(CharacterResult.Loaded(wrapper.results))
     }
 }

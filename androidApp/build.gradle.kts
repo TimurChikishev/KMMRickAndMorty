@@ -38,13 +38,19 @@ withImplementation(
     Deps.Android.ViewBinding.delegate,
     Deps.Android.Adapter.delegate,
     Deps.Android.Ui.Glide.core,
+    Deps.Android.OkHttp.core,
+    Deps.Android.OkHttp.bom,
     Deps.MVI.coroutines,
     Deps.MVI.core,
     Deps.MVI.main,
     Deps.MVI.keepers,
     Deps.Koin.core,
     Deps.Koin.android,
-    Deps.Logging.napier
+    Deps.Logging.napier,
+    Deps.AndroidX.Lifecycle.runtime,
+    Deps.AndroidX.Lifecycle.viewModel,
+    Deps.Ktor.core,
+    Deps.Kotlin.Serialization.json,
 )
 
 dependencies {

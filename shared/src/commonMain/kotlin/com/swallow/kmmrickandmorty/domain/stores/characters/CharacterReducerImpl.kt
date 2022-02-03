@@ -7,5 +7,4 @@ class CharacterReducerImpl : Reducer<CharactersStore.State, CharacterResult> {
         when (result) {
             is CharacterResult.Loaded -> copy(items = result.items)
         }
-
 }
