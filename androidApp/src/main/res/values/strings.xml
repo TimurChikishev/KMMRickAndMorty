@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RickAndMorty</string>
+    <string name="characters">Characters</string>
+    <string name="locations">Locations</string>
+    <string name="episodes">Episodes</string>
+    <string name="character_image">character image</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="rick_and_morty">Rick and Morty</string>
+</resources>
