@@ -6,7 +6,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
-    Napier.d(message = "initKoin", tag = "CHECK_LOG")
+    Napier.d(message = "initKoin")
     startKoin {
         appDeclaration()
         modules(
