@@ -7,7 +7,7 @@ import com.swallow.kmmrickandmorty.android.databinding.ItemCharactersBinding
 import com.swallow.kmmrickandmorty.android.presentation.characters.model.UiCharacter
 import com.swallow.kmmrickandmorty.android.presentation.characters.adapters.viewholders.CharacterViewHolder
 
-class SimpleItemCharacterAdapter : AbsListItemAdapterDelegate<Any, Any, CharacterViewHolder>() {
+class CharacterItemDelegate : AbsListItemAdapterDelegate<Any, Any, CharacterViewHolder>() {
 
     override fun isForViewType(item: Any, items: MutableList<Any>, position: Int): Boolean {
         return item is UiCharacter

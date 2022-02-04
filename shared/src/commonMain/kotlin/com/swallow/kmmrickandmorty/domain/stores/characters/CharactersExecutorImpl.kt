@@ -31,14 +31,38 @@ class CharactersExecutorImpl(
 
     private suspend fun retry(state: CharactersStore.State) {
         when(state.loadState){
-            is LoadState.ErrorList -> loadingList(state)
-            is LoadState.NextPageError -> loadingPage(state)
-            else -> error("It is not possible to do a repeat if the state ${state.loadState}")
+            is LoadState.ErrorList -> retryList()
+            is LoadState.NextPageError -> retryPage(state)
+            else -> return
+        }
+    }
+
+    private suspend fun retryList(){
+        dispatch(CharacterResult.UpdateLoadState(LoadState.LoadingList))
+
+        try {
+            val jsonWrapper = charactersRepository.getCharacters()
+            dispatch(CharacterResult.Loaded(jsonWrapper))
+            dispatch(CharacterResult.UpdateLoadState(LoadState.SuccessList))
+        } catch (t: Throwable) {
+            dispatch(CharacterResult.UpdateLoadState(LoadState.ErrorList))
+        }
+    }
+
+    private suspend fun retryPage(state: CharactersStore.State){
+        dispatch(CharacterResult.UpdateLoadState(LoadState.LoadingPage))
+
+        try {
+            val jsonWrapper = charactersRepository.getCharacters(state.jsonInfo)
+            dispatch(CharacterResult.LoadedPage(jsonWrapper))
+            dispatch(CharacterResult.UpdateLoadState(LoadState.NextPageSuccess))
+        } catch (t: Throwable) {
+            dispatch(CharacterResult.UpdateLoadState(LoadState.NextPageError))
         }
     }
 
     private suspend fun loadingPage(state: CharactersStore.State) {
-        if(isLoading(state)) return
+        if(isLoadingOrError(state)) return
 
         dispatch(CharacterResult.UpdateLoadState(LoadState.LoadingPage))
 
@@ -53,7 +77,7 @@ class CharactersExecutorImpl(
 
     private suspend fun loadingList(state: CharactersStore.State) {
 
-        if(isLoading(state)) return
+        if(isLoadingOrError(state)) return
 
         dispatch(CharacterResult.UpdateLoadState(LoadState.LoadingList))
 
@@ -66,8 +90,10 @@ class CharactersExecutorImpl(
         }
     }
 
-    private fun isLoading(state: CharactersStore.State): Boolean {
+    private fun isLoadingOrError(state: CharactersStore.State): Boolean {
         return state.loadState is LoadState.LoadingList
                 || state.loadState is LoadState.LoadingPage
+                || state.loadState is LoadState.ErrorList
+                || state.loadState is LoadState.NextPageError
     }
 }

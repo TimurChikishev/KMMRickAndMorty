@@ -10,18 +10,18 @@ import com.swallow.kmmrickandmorty.android.R
 import com.swallow.kmmrickandmorty.android.databinding.FragmentCharactersBinding
 import com.swallow.kmmrickandmorty.android.presentation.characters.adapters.ComplexDelegatesAdapter
 import com.swallow.kmmrickandmorty.android.presentation.characters.model.CharactersUiState
+import com.swallow.kmmrickandmorty.android.presentation.common.model.LoadStateItem
 import com.swallow.kmmrickandmorty.android.utils.PaginationScrollListener
 import com.swallow.kmmrickandmorty.android.utils.autoCleared
 import com.swallow.kmmrickandmorty.android.utils.isOrientationPortrait
 import com.swallow.kmmrickandmorty.android.utils.launchOnStartedState
 import com.swallow.kmmrickandmorty.domain.common.LoadState
-import io.github.aakira.napier.Napier
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CharactersFragment : Fragment(R.layout.fragment_characters){
+class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
     private val binding by viewBinding(FragmentCharactersBinding::bind)
-    private val characterViewModel by viewModel<CharacterViewModel>()
+    private val viewModel by viewModel<CharacterViewModel>()
     private var complexAdapter by autoCleared<ComplexDelegatesAdapter>()
 
     private val spanCount: Int
@@ -36,12 +36,15 @@ class CharactersFragment : Fragment(R.layout.fragment_characters){
 
     private fun initListeners() = with(binding) {
         plugImageView.setOnClickListener {
-            characterViewModel.retry()
+            viewModel.retry()
         }
     }
 
     private fun setupAdapter() {
-        complexAdapter = ComplexDelegatesAdapter()
+        complexAdapter = ComplexDelegatesAdapter(
+            retry = { viewModel.retry() }
+        )
+
         val gridLayoutManager = GridLayoutManager(context, spanCount)
 
         binding.recyclerView.apply {
@@ -52,30 +55,55 @@ class CharactersFragment : Fragment(R.layout.fragment_characters){
             addOnScrollListener(
                 PaginationScrollListener(
                     layoutManager = gridLayoutManager,
-                    { characterViewModel.loadingNextPage() }
+                    { viewModel.loadingNextPage() }
                 )
             )
+        }
+
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (complexAdapter.items[position] is LoadStateItem) {
+                    spanCount
+                } else {
+                    ONE
+                }
+            }
         }
     }
 
     private fun initViewModel() {
-        characterViewModel.init()
+        viewModel.init()
 
         viewLifecycleOwner.launchOnStartedState {
-            characterViewModel.state.collect(::renderCharacters)
+            viewModel.state.collect(::renderCharacters)
         }
     }
 
-    private fun renderCharacters(state: CharactersUiState){
-        Napier.d("loadState=${state.loadState}", tag = "CHECK_LOG")
+    private fun renderCharacters(state: CharactersUiState) {
+        when (state.loadState) {
+            is LoadState.LoadingList,
+            is LoadState.ErrorList,
+            is LoadState.SuccessList -> listStateRender(state)
+            is LoadState.NextPageError,
+            is LoadState.NextPageSuccess,
+            is LoadState.LoadingPage -> pageStateRender(state)
+        }
+    }
+
+    private fun listStateRender(state: CharactersUiState) {
         val isEmpty = complexAdapter.itemCount <= 0
         binding.progressBar.isVisible = state.loadState is LoadState.LoadingList && isEmpty
         binding.plugImageView.isVisible = state.loadState is LoadState.ErrorList && isEmpty
         complexAdapter.items = state.items
     }
 
+    private fun pageStateRender(state: CharactersUiState) {
+        complexAdapter.updateLoadStateItem(state)
+    }
+
     companion object {
         private const val PORTRAIT_SPAN_COUNT = 2
         private const val LAND_SPAN_COUNT = 3
+        private const val ONE = 1
     }
 }
