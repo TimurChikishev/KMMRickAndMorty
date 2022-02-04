@@ -16,6 +16,7 @@ import com.swallow.kmmrickandmorty.android.utils.autoCleared
 import com.swallow.kmmrickandmorty.android.utils.isOrientationPortrait
 import com.swallow.kmmrickandmorty.android.utils.launchOnStartedState
 import com.swallow.kmmrickandmorty.domain.common.LoadState
+import io.github.aakira.napier.Napier
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharactersFragment : Fragment(R.layout.fragment_characters) {
@@ -80,6 +81,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
     }
 
     private fun renderCharacters(state: CharactersUiState) {
+        Napier.d(message = "renderCharacters $state")
         when (state.loadState) {
             is LoadState.LoadingList,
             is LoadState.ErrorList,
@@ -98,6 +100,9 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
     }
 
     private fun pageStateRender(state: CharactersUiState) {
+        if(complexAdapter.itemCount <= 0)
+            complexAdapter.items = state.items
+
         complexAdapter.updateLoadStateItem(state)
     }
 
