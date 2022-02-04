@@ -1,22 +1,21 @@
 package com.swallow.kmmrickandmorty.android.app
 
 import android.app.Application
+import com.swallow.kmmrickandmorty.android.di.androidNetworkModule
 import com.swallow.kmmrickandmorty.android.di.appModule
-import com.swallow.kmmrickandmorty.android.di.repositoryModule
+import com.swallow.kmmrickandmorty.di.initKoin
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.GlobalContext.startKoin
 
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        startKoin {
-            androidContext(this@App)
+        initKoin {
             modules(
                 appModule,
-                repositoryModule
+                androidNetworkModule
             )
         }
 

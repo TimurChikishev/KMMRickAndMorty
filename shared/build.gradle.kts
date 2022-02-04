@@ -1,6 +1,8 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("kotlin-parcelize")
+    kotlin(Deps.Kotlin.Serialization.plugin) version Versions.kotlinVersion
 }
 
 kotlin {
@@ -26,9 +28,12 @@ kotlin {
                 implementation(Deps.MVI.keepers)
                 implementation(Deps.MVI.logging)
                 implementation(Deps.Koin.core)
-                implementation(Deps.Koin.ktor)
                 implementation(Deps.Ktor.core)
+                implementation(Deps.Ktor.utils)
+                implementation(Deps.Ktor.serialization)
+                implementation(Deps.Ktor.logging)
                 implementation(Deps.Logging.napier)
+                implementation(Deps.Kotlin.Serialization.json)
             }
         }
         val commonTest by getting {
@@ -39,10 +44,9 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(Deps.MVI.main)
-                implementation(Deps.MVI.core)
-                implementation(Deps.MVI.coroutines)
-                implementation(Deps.MVI.keepers)
+                implementation(Deps.Ktor.androidClient)
+                implementation(Deps.Koin.android)
+                implementation(Deps.Kotlin.Coroutines.android)
             }
         }
         val androidTest by getting {

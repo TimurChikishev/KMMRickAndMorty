@@ -8,17 +8,25 @@ object Deps {
             const val native = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version-native-mt"
             const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         }
+
+        object Serialization {
+            const val plugin = "plugin.serialization"
+            const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
+        }
     }
 
     object Ktor {
-        private const val version = "2.0.0-beta-1"
+        private const val version = "1.6.1"
         const val core = "io.ktor:ktor-client-core:$version"
+        const val androidClient = "io.ktor:ktor-client-okhttp:$version"
+        const val serialization = "io.ktor:ktor-client-serialization:$version"
+        const val logging = "io.ktor:ktor-client-logging:$version"
+        const val utils = "io.ktor:ktor-utils:$version"
     }
 
     object Koin {
         private const val version = "3.1.5"
         const val core = "io.insert-koin:koin-core:$version"
-        const val ktor = "io.insert-koin:koin-ktor:$version"
         const val android = "io.insert-koin:koin-android:$version"
     }
 
@@ -48,6 +56,11 @@ object Deps {
             }
         }
 
+        object OkHttp {
+            const val bom = "com.squareup.okhttp3:okhttp-bom:4.9.1"
+            const val core = "com.squareup.okhttp3:okhttp"
+        }
+
         object ViewBinding {
             private const val version = "1.5.3"
             const val delegate =  "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3"
@@ -61,6 +74,12 @@ object Deps {
 
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:1.4.1"
+
+        object Lifecycle {
+            private const val version = "2.4.0"
+            const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
+            const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
+        }
 
         object Navigation {
             private const val version = "2.4.0"

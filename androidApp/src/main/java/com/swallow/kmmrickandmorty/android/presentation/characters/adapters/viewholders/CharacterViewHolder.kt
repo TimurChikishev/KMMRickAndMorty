@@ -1,9 +1,9 @@
-package com.swallow.kmmrickandmorty.android.presentation.common.adapters.viewholders
+package com.swallow.kmmrickandmorty.android.presentation.characters.adapters.viewholders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.swallow.kmmrickandmorty.android.databinding.ItemCharactersBinding
-import com.swallow.kmmrickandmorty.android.presentation.characters.model.CharacterUiData
+import com.swallow.kmmrickandmorty.android.presentation.characters.model.UiCharacter
 
 class CharacterViewHolder(
     private val viewBinding: ItemCharactersBinding
@@ -13,7 +13,7 @@ class CharacterViewHolder(
         private const val IMAGE_SIZE: Int = 300
     }
 
-    fun bind(model: CharacterUiData.Character) = with(model) {
+    fun bind(model: UiCharacter) = with(model) {
         setAvatarImage(image)
         setName(name)
     }

@@ -6,14 +6,13 @@ import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
-    Napier.d("initKoin")
+    Napier.d(message = "initKoin")
     startKoin {
         appDeclaration()
-        modules(koinPlatformModules())
         modules(
             appModuleShared,
-//            networkModule,
-//            repositoryModule,
+            networkModule,
+            repositoryModule,
         )
     }
 }
