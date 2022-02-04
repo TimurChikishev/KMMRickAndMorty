@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.characters.fragments.CharactersFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -18,5 +19,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+
+    <ImageView
+        android:id="@+id/plugImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/rick_and_morty"
+        android:src="@drawable/ic_rick_and_morty"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
 </FrameLayout>

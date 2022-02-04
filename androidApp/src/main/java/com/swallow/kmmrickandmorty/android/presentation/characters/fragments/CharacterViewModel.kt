@@ -33,4 +33,12 @@ class CharacterViewModel(
             start()
         }
     }
+
+    fun loadingNextPage() {
+        store.accept(CharactersStore.Intent.LoadingPage)
+    }
+
+    fun retry() {
+        store.accept(CharactersStore.Intent.Retry)
+    }
 }

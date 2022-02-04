@@ -10,6 +10,7 @@ import com.swallow.kmmrickandmorty.android.R
 import com.swallow.kmmrickandmorty.android.databinding.FragmentCharactersBinding
 import com.swallow.kmmrickandmorty.android.presentation.characters.adapters.ComplexDelegatesAdapter
 import com.swallow.kmmrickandmorty.android.presentation.characters.model.CharactersUiState
+import com.swallow.kmmrickandmorty.android.utils.PaginationScrollListener
 import com.swallow.kmmrickandmorty.android.utils.autoCleared
 import com.swallow.kmmrickandmorty.android.utils.isOrientationPortrait
 import com.swallow.kmmrickandmorty.android.utils.launchOnStartedState
@@ -29,15 +30,31 @@ class CharactersFragment : Fragment(R.layout.fragment_characters){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
+        initListeners()
         initViewModel()
+    }
+
+    private fun initListeners() = with(binding) {
+        plugImageView.setOnClickListener {
+            characterViewModel.retry()
+        }
     }
 
     private fun setupAdapter() {
         complexAdapter = ComplexDelegatesAdapter()
+        val gridLayoutManager = GridLayoutManager(context, spanCount)
+
         binding.recyclerView.apply {
             adapter = complexAdapter
-            layoutManager = GridLayoutManager(context, spanCount)
+            layoutManager = gridLayoutManager
             setHasFixedSize(true)
+
+            addOnScrollListener(
+                PaginationScrollListener(
+                    layoutManager = gridLayoutManager,
+                    { characterViewModel.loadingNextPage() }
+                )
+            )
         }
     }
 
@@ -45,12 +62,15 @@ class CharactersFragment : Fragment(R.layout.fragment_characters){
         characterViewModel.init()
 
         viewLifecycleOwner.launchOnStartedState {
-            characterViewModel.state.collect(::renderCharactes)
+            characterViewModel.state.collect(::renderCharacters)
         }
     }
 
-    private fun renderCharactes(state: CharactersUiState){
-        binding.progressBar.isVisible = state.loadState is LoadState.LoadingList
+    private fun renderCharacters(state: CharactersUiState){
+        Napier.d("loadState=${state.loadState}", tag = "CHECK_LOG")
+        val isEmpty = complexAdapter.itemCount <= 0
+        binding.progressBar.isVisible = state.loadState is LoadState.LoadingList && isEmpty
+        binding.plugImageView.isVisible = state.loadState is LoadState.ErrorList && isEmpty
         complexAdapter.items = state.items
     }
 
