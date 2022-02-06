@@ -13,6 +13,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
             appModuleShared,
             networkModule,
             repositoryModule,
+            storeModule
         )
     }
 }
