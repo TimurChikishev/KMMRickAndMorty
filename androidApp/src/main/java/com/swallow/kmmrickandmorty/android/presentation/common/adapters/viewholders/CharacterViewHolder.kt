@@ -1,6 +1,7 @@
 package com.swallow.kmmrickandmorty.android.presentation.common.adapters.viewholders
 
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.swallow.kmmrickandmorty.android.databinding.ItemCharactersBinding
 import com.swallow.kmmrickandmorty.android.presentation.characters.model.Character
 

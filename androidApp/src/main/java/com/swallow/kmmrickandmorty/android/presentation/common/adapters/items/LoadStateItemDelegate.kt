@@ -2,6 +2,7 @@ package com.swallow.kmmrickandmorty.android.presentation.common.adapters.items
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.swallow.kmmrickandmorty.android.databinding.ItemLoadingPageBinding
