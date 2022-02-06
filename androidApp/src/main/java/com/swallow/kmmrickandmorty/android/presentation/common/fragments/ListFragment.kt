@@ -69,7 +69,6 @@ abstract class ListFragment<RemoteModel : Any, UiModel : Any, UiState : ListStat
     }
 
     private fun renderList(state: UiState) {
-        Napier.d(message = "ui state = ${state.items}")
         when (state.loadState) {
             is LoadState.LoadingList,
             is LoadState.ErrorList,

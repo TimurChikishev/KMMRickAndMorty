@@ -5,6 +5,7 @@ import com.swallow.kmmrickandmorty.data.models.common.JsonWrapper
 import com.swallow.kmmrickandmorty.data.models.episodes.RemoteEpisode
 import com.swallow.kmmrickandmorty.domain.repository.GetRepository
 import com.swallow.kmmrickandmorty.utils.ioDispatcher
+import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.request.*
 import kotlinx.coroutines.withContext

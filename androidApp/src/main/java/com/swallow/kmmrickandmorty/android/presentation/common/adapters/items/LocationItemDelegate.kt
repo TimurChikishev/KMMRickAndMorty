@@ -11,7 +11,6 @@ import io.github.aakira.napier.Napier
 class LocationItemDelegate : AbsListItemAdapterDelegate<Any, Any, LocationViewHolder>() {
 
     override fun isForViewType(item: Any, items: MutableList<Any>, position: Int): Boolean {
-        Napier.d(message = "isForViewType=$item")
         return item is Locations
     }
 

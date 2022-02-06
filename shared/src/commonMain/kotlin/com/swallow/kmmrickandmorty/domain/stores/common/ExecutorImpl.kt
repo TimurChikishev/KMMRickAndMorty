@@ -46,6 +46,7 @@ class ExecutorImpl<Model : Any>(
             dispatch(Result.Loaded(jsonWrapper))
             dispatch(Result.UpdateLoadState(LoadState.SuccessList))
         } catch (t: Throwable) {
+            Napier.w(throwable = t, message = "retry list error")
             dispatch(Result.UpdateLoadState(LoadState.ErrorList))
         }
     }
@@ -58,12 +59,13 @@ class ExecutorImpl<Model : Any>(
             dispatch(Result.LoadedPage(jsonWrapper))
             dispatch(Result.UpdateLoadState(LoadState.NextPageSuccess))
         } catch (t: Throwable) {
+            Napier.w(throwable = t, message = "retry page error")
             dispatch(Result.UpdateLoadState(LoadState.NextPageError))
         }
     }
 
     private suspend fun loadingPage(state: ListStore.State<Model>) {
-        if(isLoadingOrError(state)) return
+        if(isLoadingOrError(state) || isEnd(state)) return
 
         dispatch(Result.UpdateLoadState(LoadState.LoadingPage))
 
@@ -72,13 +74,13 @@ class ExecutorImpl<Model : Any>(
             dispatch(Result.LoadedPage(jsonWrapper))
             dispatch(Result.UpdateLoadState(LoadState.NextPageSuccess))
         } catch (t: Throwable) {
+            Napier.w(throwable = t, message = "loading page error")
             dispatch(Result.UpdateLoadState(LoadState.NextPageError))
         }
     }
 
     private suspend fun loadingList(state: ListStore.State<Model>) {
-
-        if(isLoadingOrError(state)) return
+        if(isLoadingOrError(state) || isEnd(state)) return
 
         dispatch(Result.UpdateLoadState(LoadState.LoadingList))
 
@@ -97,5 +99,9 @@ class ExecutorImpl<Model : Any>(
                 || state.loadState is LoadState.LoadingPage
                 || state.loadState is LoadState.ErrorList
                 || state.loadState is LoadState.NextPageError
+    }
+
+    private fun isEnd(state: ListStore.State<Model>): Boolean {
+        return state.jsonInfo.next == null && state.jsonInfo.pages > 0
     }
 }
