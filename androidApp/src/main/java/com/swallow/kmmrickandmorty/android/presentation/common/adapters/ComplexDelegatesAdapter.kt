@@ -2,6 +2,7 @@ package com.swallow.kmmrickandmorty.android.presentation.common.adapters
 
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.swallow.kmmrickandmorty.android.presentation.common.adapters.items.CharacterItemDelegate
+import com.swallow.kmmrickandmorty.android.presentation.common.adapters.items.EpisodeItemDelegate
 import com.swallow.kmmrickandmorty.android.presentation.common.adapters.items.LoadStateItemDelegate
 import com.swallow.kmmrickandmorty.android.presentation.common.adapters.items.LocationItemDelegate
 import com.swallow.kmmrickandmorty.android.presentation.common.model.ListState
@@ -15,6 +16,7 @@ class ComplexDelegatesAdapter(
     init {
         delegatesManager
             .addDelegate(LocationItemDelegate())
+            .addDelegate(EpisodeItemDelegate())
             .addDelegate(CharacterItemDelegate())
             .addDelegate(LoadStateItemDelegate(retry))
     }

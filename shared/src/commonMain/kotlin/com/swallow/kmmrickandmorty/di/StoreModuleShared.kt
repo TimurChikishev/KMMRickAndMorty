@@ -3,6 +3,7 @@ package com.swallow.kmmrickandmorty.di
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.swallow.kmmrickandmorty.data.models.characters.RemoteCharacter
+import com.swallow.kmmrickandmorty.data.models.episodes.RemoteEpisode
 import com.swallow.kmmrickandmorty.data.models.locations.RemoteLocations
 import com.swallow.kmmrickandmorty.domain.stores.common.ListStoreFactory
 import org.koin.core.qualifier.named
@@ -10,7 +11,8 @@ import org.koin.dsl.module
 
 enum class StoreType {
     CHARACTER,
-    LOCATION
+    LOCATION,
+    EPISODE
 }
 
 val storeModule = module {
@@ -27,6 +29,13 @@ val storeModule = module {
         ListStoreFactory<RemoteLocations>(
             storeFactory = get(),
             repository = get(named(RepositoryType.LOCATION)),
+        ).create()
+    }
+
+    factory(named(StoreType.EPISODE)) {
+        ListStoreFactory<RemoteEpisode>(
+            storeFactory = get(),
+            repository = get(named(RepositoryType.EPISODE)),
         ).create()
     }
 }
